@@ -1,0 +1,13 @@
+<hr>
+<div class='visNetwork' id="visNetwork" #visNetwork></div>
+
+
+<div class="contextMenu" [hidden]='!showContext' #contextMenu>
+    <div class="action">Actions</div>
+    <li (click)='deleteNode()'>
+        <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
+    </li>
+    <li (click)='detachNode()'>
+        <i class="fa fa-minus-square-o" aria-hidden="true"></i> Detach
+    </li>
+</div>
