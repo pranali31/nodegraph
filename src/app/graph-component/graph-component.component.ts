@@ -1,8 +1,7 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef, EventEmitter, Output } from '@angular/core';
 import { Network } from 'vis-network';
 import { DataSet } from 'vis-data';
 import { HostListener } from '@angular/core';
-declare let vis: any;
 
 @Component({
   selector: 'app-graph-component',
@@ -13,6 +12,7 @@ export class GraphComponentComponent implements OnInit {
   @ViewChild('visNetwork') visNetwork: ElementRef;
   @ViewChild('contextMenu') contextMenu: ElementRef;
   @Input() graphData;
+  @Output() hideGraphEvent = new EventEmitter();
   private networkInstance: any;
   showContext: boolean = false;
   nodeClicked: any;
@@ -34,6 +34,29 @@ export class GraphComponentComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    this.setGraph();
+  }
+
+  deleteNode() {
+    this.networkInstance.nodesHandler.nodesListeners.remove(this.selectedParam.event, { items: [this.nodeClicked] });
+    this.showContext = false;
+  }
+
+
+  detachNode() {
+    let edges = this.networkInstance.getConnectedEdges(this.nodeClicked);
+    this.edges.remove(edges);
+    this.showContext = false;
+  }
+
+  onRemoveGraph() {
+    this.hideGraphEvent.emit(false);
+  }
+
+  setGraph() {
+    if (this.networkInstance) {
+      this.networkInstance.destroy();
+    }
     // create an array with nodes
     this.nodes = new DataSet<any>(
       this.graphData.nodes
@@ -74,21 +97,6 @@ export class GraphComponentComponent implements OnInit {
 
       }
     });
-
-
-  }
-
-  deleteNode() {
-    this.networkInstance.nodesHandler.nodesListeners.remove(this.selectedParam.event, { items: [this.nodeClicked] });
-    this.showContext = false;
-
-  }
-
-
-  detachNode() {
-    let edges = this.networkInstance.getConnectedEdges(this.nodeClicked);
-    this.edges.remove(edges);
-    this.showContext = false;
   }
 }
 
