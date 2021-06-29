@@ -302,7 +302,7 @@
   <button (click)='onShowGraph()' [disabled]='showGraph' type="button" class="btn btn-primary"> Show Graph</button>
 </div>
  
-<app-graph-component *ngIf='showGraph' [graphData]='graphData' (hideGraphEvent)='onRemoveGraph(e)' ></app-graph-component>
+<app-graph-component *ngIf='showGraph' [graphData]='graphData' (hideGraphEvent)='onRemoveGraph()' ></app-graph-component>
 
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
