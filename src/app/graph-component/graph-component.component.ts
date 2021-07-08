@@ -37,9 +37,23 @@ export class GraphComponentComponent implements OnInit {
     this.setGraph();
   }
 
+  softDeleteNode(){
+    let selectedEdges = this.networkInstance.getConnectedEdges(this.nodeClicked);
+    selectedEdges.forEach(element => {
+      this.edges.update([
+        {
+        id:element,
+       dashes:true
+      }
+      ]);
+    });
+    
+   this.showContext = false;
+  }
+  
   deleteNode() {
-    this.networkInstance.nodesHandler.nodesListeners.remove(this.selectedParam.event, { items: [this.nodeClicked] });
-    this.showContext = false;
+   this.networkInstance.nodesHandler.nodesListeners.remove(this.selectedParam.event, { items: [this.nodeClicked] });
+   this.showContext = false;
   }
 
 

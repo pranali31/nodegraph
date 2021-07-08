@@ -10,10 +10,13 @@
 
 <div class="contextMenu" [hidden]='!showContext' #contextMenu>
     <div class="action">Actions</div>
+    <li (click)='softDeleteNode()'>
+        <i class="fa fa-minus-square-o" aria-hidden="true"></i> Soft Delete
+    </li>
     <li (click)='deleteNode()'>
         <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
     </li>
     <li (click)='detachNode()'>
-        <i class="fa fa-minus-square-o" aria-hidden="true"></i> Detach
+        <i class="fa fa-ban" aria-hidden="true"></i> Detach
     </li>
 </div>
