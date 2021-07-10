@@ -1,8 +1,17 @@
 <hr>
 <div class="col-xs-12 col-sm-12 col-lg-12 text-center">
-    <button (click)='setGraph()' type="button" class="btn btn-primary mx-2 reset" > Reset Graph</button>
+    <button (click)='setGraph()' type="button" class="btn btn-primary mx-2 reset" > 
+        <i class="fa fa-repeat mx-1" aria-hidden="true"></i>Reset Graph</button>
 
-    <button (click)='onRemoveGraph()' type="button" class="btn btn-primary remove"> Remove Graph</button>
+    <button (click)='onRemoveGraph()' type="button" class="btn btn-primary mx-2 remove"> 
+        <i class="fa fa-minus-circle mx-1" aria-hidden="true"></i>Remove Graph</button>
+
+    <button (click)='export()' type="button" class="btn btn-primary mx-2 export"> 
+        <i class="fa fa-download mx-1" aria-hidden="true"></i>Export Graph</button>
+
+    <button (click)='saveVersion()' type="button" class="btn btn-primary save"> 
+        <i class="fa fa-floppy-o mx-1" aria-hidden="true"></i>Save Graph Version</button>
+
 
 </div>
 <div class='visNetwork' id="visNetwork" #visNetwork></div>

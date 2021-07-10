@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild, ElementRef, EventEmitter, Output }
 import { Network } from 'vis-network';
 import { DataSet } from 'vis-data';
 import { HostListener } from '@angular/core';
+import { ExportAsService, ExportAsConfig } from 'ngx-export-as';
 
 @Component({
   selector: 'app-graph-component',
@@ -19,7 +20,12 @@ export class GraphComponentComponent implements OnInit {
   selectedParam: any;
   nodes: any;
   edges: any;
-  constructor() { }
+  exportAsConfig: ExportAsConfig = {
+    type: 'png', // the type you want to download
+    elementIdOrContent: 'visNetwork', // the id of html/table element
+  }
+
+  constructor(private exportAsService: ExportAsService) { }
 
   ngOnInit(): void {
 
@@ -111,6 +117,13 @@ export class GraphComponentComponent implements OnInit {
 
       }
     });
+  }
+
+  
+  export(){
+    this.exportAsService.save(this.exportAsConfig, 'nodegraph').subscribe(() => {
+      // save started
+    });  
   }
 }
 
