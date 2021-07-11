@@ -1,6 +1,6 @@
 <hr>
 <div class="col-xs-12 col-sm-12 col-lg-12 text-center">
-    <button (click)='setGraph()' type="button" class="btn btn-primary mx-2 reset" > 
+    <button (click)='resetGraph()' type="button" class="btn btn-primary mx-2 reset" > 
         <i class="fa fa-repeat mx-1" aria-hidden="true"></i>Reset Graph</button>
 
     <button (click)='onRemoveGraph()' type="button" class="btn btn-primary mx-2 remove"> 
@@ -14,6 +14,110 @@
 
 
 </div>
+<!-- add node/edge section -->
+<div class="container mt-4">
+    <div class="row">
+        <!-- add node section-->
+        <div class="col-md-6">
+            <!-- add node form -->
+            <form novalidate (ngSubmit)="addNode()" #nodeForm="ngForm">
+                <!-- node title -->
+                <div class="form-group row mb-3">
+                    <label for="nodeTitle" class="col-sm-3 col-form-label">Node Title <span class="text-danger">&nbsp;*</span></label>
+                    
+                    <div class="col-sm-9">
+                        <input type="text" class="form-control col-sm-10" name="nodeTitle"
+                            [(ngModel)]="params.node.title" required #nodeTitle="ngModel">
+                        <div class="form-control-feedback text-danger"
+                            *ngIf="nodeTitle.errors && (nodeTitle.dirty || nodeTitle.touched)">
+                            <p *ngIf="nodeTitle.errors.required">First name is required</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Module type -->
+                <div class="form-group row mb-3">
+                    <label for="moduleType" class="col-sm-3 col-form-label">Modue Type <span class="text-danger">&nbsp;*</span></label>
+                    
+                    <div class="col-sm-9">
+                        <select class="form-control" required name="moduleType" [(ngModel)]="params.node.moduleType"
+                            #moduleType="ngModel">
+                            <option value="">Please select a module</option>
+                            <option value="alerts">Alerts</option>
+                            <option value="incidents">Incidents</option>
+                            <option value="indicators">Indicators</option>
+                        </select>
+                        <div class="form-control-feedback text-danger"
+                            *ngIf="moduleType.errors && (moduleType.dirty || moduleType.touched)">
+                            <p *ngIf="moduleType.errors.required">Module Type is required</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- color picker -->
+                <div class="form-group row mb-3">
+                    <label for="colorPickerfield" class="col-sm-3 col-form-label">select Color</label>
+                    <div class="col-sm-9">
+                        <input name="colorPickerfield" [(colorPicker)]="params.node.color"
+                            [value]="params.node.color" />
+                        <span class="colorPoint" [style.background]="params.node.color"></span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" [disabled]="nodeForm.invalid">Add Node
+                </button>
+            </form>
+        </div>
+
+        <!-- add edge section -->
+        <div class="col-md-6">
+            <!-- add node form -->
+            <form novalidate (ngSubmit)="addEdge()" #edgeForm="ngForm">
+                <!-- from edge -->
+                <div class="form-group row mb-3">
+                    <label for="fromDropdown" class="col-sm-3 col-form-label">From <span class="text-danger">&nbsp;*</span></label>
+                    
+                    <div class="col-sm-9">
+                        <select class="form-control" required name="fromDropdown" [(ngModel)]="params.edge.from"
+                            #fromDropdown="ngModel">
+                            <option value="">Please select a node</option>
+                            <option *ngFor="let node of nodeData" [ngValue]="node.id">{{node.title}}</option>
+                        </select>
+                        <div class="form-control-feedback text-danger"
+                            *ngIf="fromDropdown.errors && (fromDropdown.dirty || fromDropdown.touched)">
+                            <p *ngIf="fromDropdown.errors.required">Module Type is required</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- to edge -->
+                <div class="form-group row mb-3">
+                    <label for="toDropdown" class="col-sm-3 col-form-label">To <span class="text-danger">&nbsp;*</span></label>
+                    <div class="col-sm-9">
+                        <select class="form-control" required name="toDropdown" [(ngModel)]="params.edge.to"
+                            #toDropdown="ngModel">
+                            <option value="">Please select a node</option>
+                            <option *ngFor="let node of nodeData" [ngValue]="node.id">{{node.title}}</option>
+                        </select>
+                        <div class="form-control-feedback text-danger"
+                            *ngIf="toDropdown.errors && (toDropdown.dirty || toDropdown.touched)">
+                            <p *ngIf="toDropdown.errors.required">Module Type is required</p>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" [disabled]="edgeForm.invalid">Add Edge
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<hr>
+<div *ngIf='versionArray.length>0' class="col-xs-12 col-sm-12 col-lg-12 text-center">
+<select [(ngModel)]='selectedVersion' (change)="changeVersion($event)">
+    <option disabled>Select Version</option>
+    <option *ngFor="let version of versionArray" value="{{version.id}}">{{version.id}}</option>
+</select>
+</div>
+
 <div class='visNetwork' id="visNetwork" #visNetwork></div>
 
 
