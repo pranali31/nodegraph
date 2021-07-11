@@ -1,10 +1,7 @@
-<hr>
-<div class="col-xs-12 col-sm-12 col-lg-12 text-center">
+<!-- graph control buttons -->
+<div class="col-xs-12 col-sm-12 col-lg-12 text-center mt-4">
     <button (click)='resetGraph()' type="button" class="btn btn-primary mx-2 reset" > 
         <i class="fa fa-repeat mx-1" aria-hidden="true"></i>Reset Graph</button>
-
-    <button (click)='onRemoveGraph()' type="button" class="btn btn-primary mx-2 remove"> 
-        <i class="fa fa-minus-circle mx-1" aria-hidden="true"></i>Remove Graph</button>
 
     <button (click)='export()' type="button" class="btn btn-primary mx-2 export"> 
         <i class="fa fa-download mx-1" aria-hidden="true"></i>Export Graph</button>
@@ -12,13 +9,19 @@
     <button (click)='saveVersion()' type="button" class="btn btn-primary save"> 
         <i class="fa fa-floppy-o mx-1" aria-hidden="true"></i>Save Graph Version</button>
 
-
+    <!-- version dropdown -->
+    <span *ngIf='versionArray.length>0' class="versionClass">
+    <select [(ngModel)]='selectedVersion' (change)="changeVersion($event)">
+        <option value='' disabled>Select Version</option>
+        <option *ngFor="let version of versionArray" value="{{version.id}}">{{version.id}}</option>
+    </select>
+    </span>
 </div>
 <!-- add node/edge section -->
 <div class="container mt-4">
     <div class="row">
         <!-- add node section-->
-        <div class="col-md-6">
+        <div class="col-md-6 nodeDiv">
             <!-- add node form -->
             <form novalidate (ngSubmit)="addNode()" #nodeForm="ngForm">
                 <!-- node title -->
@@ -56,7 +59,7 @@
                 </div>
                 <!-- color picker -->
                 <div class="form-group row mb-3">
-                    <label for="colorPickerfield" class="col-sm-3 col-form-label">select Color</label>
+                    <label for="colorPickerfield" class="col-sm-3 col-form-label">Select Color</label>
                     <div class="col-sm-9">
                         <input name="colorPickerfield" [(colorPicker)]="params.node.color"
                             [value]="params.node.color" />
@@ -111,16 +114,11 @@
     </div>
 </div>
 <hr>
-<div *ngIf='versionArray.length>0' class="col-xs-12 col-sm-12 col-lg-12 text-center">
-<select [(ngModel)]='selectedVersion' (change)="changeVersion($event)">
-    <option disabled>Select Version</option>
-    <option *ngFor="let version of versionArray" value="{{version.id}}">{{version.id}}</option>
-</select>
-</div>
 
+<!-- graph container/element -->
 <div class='visNetwork' id="visNetwork" #visNetwork></div>
 
-
+<!-- right click context menu -->
 <div class="contextMenu" [hidden]='!showContext' #contextMenu>
     <div class="action">Actions</div>
     <li (click)='softDeleteNode()'>

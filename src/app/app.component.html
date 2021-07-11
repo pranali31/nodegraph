@@ -298,11 +298,11 @@
   }
 </style>
 
-<div class="card-container">
+<!-- <div class="card-container">
   <button (click)='onShowGraph()' [disabled]='showGraph' type="button" class="btn btn-primary"> Show Graph</button>
-</div>
+</div> -->
  
-<app-graph-component *ngIf='showGraph' [graphData]='graphData' (hideGraphEvent)='onRemoveGraph()' ></app-graph-component>
+<app-graph-component *ngIf='graphData' [graphData]='graphData' (hideGraphEvent)='onRemoveGraph()' ></app-graph-component>
 
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->

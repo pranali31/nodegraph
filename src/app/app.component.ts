@@ -8,17 +8,18 @@ import { GraphService } from './graph.service';
 })
 export class AppComponent implements OnInit{
   title = 'nodeGraph';
-  showGraph  = false;
+  showGraph  = true;
 
   graphData : any;
   constructor(private graphService : GraphService){
-
-  }
-
-  ngOnInit(){
     this.graphService.getGraphData().subscribe(data=>{
       this.graphData = data;
     })
+  }
+
+  
+  ngOnInit(){
+   
   }
 
 onShowGraph(){
